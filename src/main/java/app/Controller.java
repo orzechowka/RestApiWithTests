@@ -33,4 +33,9 @@ public class Controller {
     public Word putWord(@Valid @RequestBody Word word) {
         return wordRepository.save(word);
     }
+
+    @DeleteMapping("/words/delete")
+    public void delete() {
+        wordRepository.deleteAll();
+    }
 }
