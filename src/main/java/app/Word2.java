@@ -1,27 +1,26 @@
 package app;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
-/**
- * Created by Anna on 2018-10-01.
- */
 @Entity
 @Table(name = "spanish")
-public class Word {
+public class Word2 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @Column
+    @Column(name="word")
     @NotBlank
-    String word;
+    String word2;
 
-    @Column
+    @Column(name="translation")
     @NotBlank
-    String translation;
+    String translation2;
 
     public int getId() {
         return id;
@@ -32,32 +31,32 @@ public class Word {
     }
 
     public String getWord() {
-        return word;
+        return word2;
     }
 
-    public void setWord(String word) {
-        this.word = word;
+    public void setWord(String word2) {
+        this.word2 = word2;
     }
 
     public String getTranslation() {
-        return translation;
+        return translation2;
     }
 
-    public void setTranslation(String translation) {
-        this.translation = translation;
+    public void setTranslation(String translation2) {
+        this.translation2 = translation2;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Word word1 = (Word) o;
-        return Objects.equals(word, word1.word) &&
-                Objects.equals(translation, word1.translation);
+        Word2 word21 = (Word2) o;
+        return Objects.equals(word2, word21.word2) &&
+                Objects.equals(translation2, word21.translation2);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(word, translation);
+        return Objects.hash(word2, translation2);
     }
 }

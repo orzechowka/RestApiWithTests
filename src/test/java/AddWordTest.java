@@ -1,4 +1,5 @@
 import app.Word;
+import app.Word2;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +12,13 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Anna on 2018-10-01.
- */
 @Component
 public class AddWordTest {
 
     @Autowired
     RestTemplate template;
     Word word;
+    Word2 word2;
 
     @Before
     public void setUp() {
@@ -28,6 +27,10 @@ public class AddWordTest {
         word = new Word();
         word.setWord("jeden");
         word.setTranslation("uno");
+
+        word2 = new Word2();
+        word2.setWord("dwa");
+        word2.setTranslation("dos");
     }
 
     @Test
@@ -41,10 +44,16 @@ public class AddWordTest {
 
     @Test
     public void addWord2() {
-        Map<String, String> map = new HashMap<>();
-        map.put("String", "String");
-        ResponseEntity<Word> wordResponseEntity = template.postForEntity("http://localhost:8080/words", word, Word.class, map);
-        wordResponseEntity.getStatusCode();
+        Word wordAdded = template.postForObject("http://localhost:8080/words", this.word, Word.class);
+        assertEquals(word, wordAdded);
+
+    }
+
+    @Test
+    public void addWord21() {
+        Word2 wordAdded = template.postForObject("http://localhost:8080/words", this.word2, Word2.class);
+        assertEquals(word2, wordAdded);
+
     }
 
 }
