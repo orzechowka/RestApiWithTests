@@ -8,7 +8,6 @@ import static junit.framework.TestCase.assertEquals;
 public class GetWordTest {
 
     RestTemplate template;
-    Word newWord;
     Word wordAdded;
     String WORD = "jeden";
     String TRANSLATION = "uno";
@@ -16,8 +15,8 @@ public class GetWordTest {
     @Before
     public void setUp() {
         template = new RestTemplate();
-        clearDatabase();
-        addWord(WORD, TRANSLATION);
+        Helper.clearDatabase();
+        wordAdded = Helper.addWord(WORD, TRANSLATION);
     }
 
     @Test
@@ -28,14 +27,5 @@ public class GetWordTest {
     }
 
 
-    private void clearDatabase() {
-        template.delete("http://localhost:8080/words/delete");
-    }
 
-    private void addWord(String word, String translation) {
-        newWord = new Word();
-        newWord.setWord(word);
-        newWord.setTranslation(translation);
-        wordAdded = template.postForObject("http://localhost:8080/words", newWord, Word.class);
-    }
 }

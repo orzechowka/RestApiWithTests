@@ -19,23 +19,21 @@ public class AddWordTest {
     RestTemplate template;
     Word word;
     Word2 word2;
+    String WORD = "jeden";
+    String TRANSLATION = "uno";
+    String WORD_2 = "dwa";
+    String TRANSLATION_2 = "dos";
 
     @Before
     public void setUp() {
         template = new RestTemplate();
-        template.delete("http://localhost:8080/words/delete");
-        word = new Word();
-        word.setWord("jeden");
-        word.setTranslation("uno");
-
-        word2 = new Word2();
-        word2.setWord("dwa");
-        word2.setTranslation("dos");
+        Helper.clearDatabase();
+        word = Helper.addWord(WORD, TRANSLATION);
+        word2 = Helper.addWord2(WORD_2, TRANSLATION_2);
     }
 
     @Test
     public void addWord() {
-
         ResponseEntity<Word> wordResponseEntity = template.postForEntity("http://localhost:8080/words", word, Word.class);
         Word addedWord = wordResponseEntity.getBody();
         assertEquals(word.getWord(), addedWord.getWord());
@@ -44,16 +42,14 @@ public class AddWordTest {
 
     @Test
     public void addWord2() {
-        Word wordAdded = template.postForObject("http://localhost:8080/words", this.word, Word.class);
-        assertEquals(word, wordAdded);
-
+        Word2 wordAdded = template.postForObject("http://localhost:8080/words", word2, Word2.class);
+        assertEquals(word2, wordAdded);
     }
 
     @Test
     public void addWord21() {
-        Word2 wordAdded = template.postForObject("http://localhost:8080/words", this.word2, Word2.class);
+        Word2 wordAdded = template.postForObject("http://localhost:8080/words", word2, Word2.class);
         assertEquals(word2, wordAdded);
-
     }
 
 }
